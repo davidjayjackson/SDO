@@ -11,12 +11,12 @@ sdo_monthly$Day <- day(sdo_monthly$Ymd)
 sdo_monthly$Ymd <- as.Date(sdo_monthly$Ymd)
 sdo_monthly <- select(sdo_monthly,Ymd,Year,Month,Day,Wn,Ws,Wolf)
 tbl_df(sdo_monthly)
-ggplot(data=sdo_monthly,aes(x=Ymd,y=Wn,col="North")) + geom_line() +
-  geom_line(data=sdo_monthly,aes(x=Ymd,y=Ws,col="South")) + ggtitle("SDO N/S Wolf: 2012 - 2019")
+ggplot(data=sdo_monthly,aes(x=Ymd,y=Wn,col="North")) + geom_col() +
+  geom_col(data=sdo_monthly,aes(x=Ymd,y=Ws,col="South")) + ggtitle("SDO N/S Wolf: 2012 - 2019")
 # Current Mimimn 2014 - 2019
 sdo_current <- sdo_monthly %>% filter(Year >= 2014)
-ggplot(data=sdo_current,aes(x=Ymd,y=Wn,col="North")) + geom_line() +
-  geom_line(data=sdo_current,aes(x=Ymd,y=Ws,col="South")) + ggtitle("SDO Current N/S Wolf: 2014 - 2019")
+ggplot(data=sdo_current,aes(x=Ymd,y=Wn,col="North")) + geom_col() +
+  geom_col(data=sdo_current,aes(x=Ymd,y=Ws,col="South")) + ggtitle("SDO Current N/S Wolf: 2014 - 2019")
 #
 # Use tidyverse spread function to create crosstab tables.
 # North table for Current Solar Min.
@@ -52,12 +52,12 @@ sidc$Month <- as.integer(sidc$Month)
 sidc$Day   <- as.integer(sidc$Day)
 summary(sidc)
 ## Begin plotting North  Wolf(R) numbers.
-ggplot(data=kanzel,aes(x=date,y=Wn,col="kanzel")) + geom_line() +
-  geom_line(data=sidc,aes(x=Ymd,y=Rn,col="Sidc")) +
+ggplot(data=kanzel,aes(x=date,y=Wn,col="kanzel")) + geom_col() +
+  geom_col(data=sidc,aes(x=Ymd,y=Rn,col="Sidc")) +
   ggtitle("Sidc/Kanzel North Sunspots")
 ## Plot South Rs/Ws Wolf numbers
-ggplot(data=kanzel,aes(x=date,y=Ws,col="kanzel")) + geom_line() +
-  geom_line(data=sidc,aes(x=Ymd,y=Rs,col="Sidc")) +
+ggplot(data=kanzel,aes(x=date,y=Ws,col="kanzel")) + geom_col() +
+  geom_col(data=sidc,aes(x=Ymd,y=Rs,col="Sidc")) +
   ggtitle("Sidc/Kanzel South Sunspots")
 ## Create smoothed curve
 # South smoothed plot
