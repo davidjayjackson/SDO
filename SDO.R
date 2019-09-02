@@ -1,12 +1,15 @@
 library(tidyverse)
 library(lubridate)
 #
-sdo <- read_csv("./ns_sdoh.csv")
+rm(list=ls())
+#
+
 sdo_monthly <- read_csv("./ns_sdoh_mm.csv")
 sdo_monthly$Year <- year(sdo_monthly$Ymd)
 sdo_monthly$Month <- month(sdo_monthly$Ymd)
 sdo_monthly$Day <- day(sdo_monthly$Ymd)
 sdo_monthly$Ymd <- as.Date(sdo_monthly$Ymd)
+sdo_monthly <- select(sdo_monthly,Ymd,Year,Month,Day,Wn,Ws,Wolf)
 tbl_df(sdo_monthly)
 ggplot(data=sdo_monthly,aes(x=Ymd,y=Wn,col="North")) + geom_line() +
   geom_line(data=sdo_monthly,aes(x=Ymd,y=Ws,col="South")) + ggtitle("SDO N/S Wolf: 2012 - 2019")
