@@ -48,7 +48,7 @@ sidc$Ymd <- as.Date(paste(sidc$Year, sidc$Month, sidc$Day, sep = "-"))
 sidc$Month <- as.integer(sidc$Month)
 sidc$Day   <- as.integer(sidc$Day)
 summary(sidc)
-## Begin plotting North vs South Wolf(R) numbers.
+## Begin plotting North  Wolf(R) numbers.
 ggplot(data=kanzel,aes(x=date,y=Wn,col="kanzel")) + geom_line() +
   geom_line(data=sidc,aes(x=Ymd,y=Rn,col="Sidc")) +
   ggtitle("Sidc/Kanzel North Sunspots")
@@ -56,3 +56,12 @@ ggplot(data=kanzel,aes(x=date,y=Wn,col="kanzel")) + geom_line() +
 ggplot(data=kanzel,aes(x=date,y=Ws,col="kanzel")) + geom_line() +
   geom_line(data=sidc,aes(x=Ymd,y=Rs,col="Sidc")) +
   ggtitle("Sidc/Kanzel South Sunspots")
+## Create smoothed curve
+# South smoothed plot
+ggplot(data=kanzel,aes(x=date,y=Ws,col="kanzel")) +geom_smooth() +
+  geom_smooth(data=sidc,aes(x=Ymd,y=Rs,col="Sidc")) +
+  ggtitle("Sidc/Kanzel South Smooth plot")
+# North smoothed plot
+ggplot(data=kanzel,aes(x=date,y=Wn,col="kanzel")) +geom_smooth() +
+  geom_smooth(data=sidc,aes(x=Ymd,y=Rn,col="Sidc")) +
+  ggtitle("Sidc/Kanzel North Smooth plot")
