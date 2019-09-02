@@ -24,3 +24,9 @@ sdo_current %>% select(Year,Month,Wn) %>% spread(Month,Wn)
 # South Table for Current Min.
 print("Current(South) Solar Min. 2014-2019")
 sdo_current %>% select(Year,Month,Ws) %>% spread(Month,Ws)
+# A Couple of Histographs N/S:
+ggplot(data=sdo_current,aes(x=Wn)) +geom_histogram() +
+  ggtitle("SDO (North) Histogram: 2014-2019")
+#
+ggplot(data=sdo_current,aes(x=Ws)) +geom_histogram() +
+  ggtitle("SDO (South) Histogram: 2014-2019")
