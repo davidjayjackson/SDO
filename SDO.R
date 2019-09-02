@@ -30,3 +30,29 @@ ggplot(data=sdo_current,aes(x=Wn)) +geom_histogram() +
 #
 ggplot(data=sdo_current,aes(x=Ws)) +geom_histogram() +
   ggtitle("SDO (South) Histogram: 2014-2019")
+##
+## Start silso/kanzel import and pull out only needed fields
+kanzel <- read_csv("./silso_kanzel.csv") %>%
+  select(date,Wn,Ws,Wolf)
+# Split date to Year,Month,Day fields
+kanzel$Year <- year(kanzel$date)
+kanzel$Month <- month(kanzel$date)
+kanzel$Day <- day(kanzel$date)
+summary(kanzel)
+## Import SIDC NOrth/South Data and pulled out only needed fields
+sidc <-  read_delim("SN_d_hem_V2.0.csv", 
+                    ";", escape_double = FALSE, trim_ws = TRUE)
+sidc <- select(sidc,Year,Month,Day,R,Rn,Rs)
+# Creat Date field : YYY-MM-DD
+sidc$Ymd <- as.Date(paste(sidc$Year, sidc$Month, sidc$Day, sep = "-"))
+sidc$Month <- as.integer(sidc$Month)
+sidc$Day   <- as.integer(sidc$Day)
+summary(sidc)
+## Begin plotting North vs South Wolf(R) numbers.
+ggplot(data=kanzel,aes(x=date,y=Wn,col="kanzel")) + geom_line() +
+  geom_line(data=sidc,aes(x=Ymd,y=Rn,col="Sidc")) +
+  ggtitle("Sidc/Kanzel North Sunspots")
+## Plot South Rs/Ws Wolf numbers
+ggplot(data=kanzel,aes(x=date,y=Ws,col="kanzel")) + geom_line() +
+  geom_line(data=sidc,aes(x=Ymd,y=Rs,col="Sidc")) +
+  ggtitle("Sidc/Kanzel South Sunspots")
