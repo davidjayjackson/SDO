@@ -1,0 +1,39 @@
+---
+title: "Kanzel/SiDc Sunspot Analysis"
+author: "David J Jackson"
+date: "9/2/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+```
+
+
+```{r sdo_monthly, echo=FALSE }
+sdo_monthly <- read_csv("./ns_sdoh_mm.csv")
+sdo_monthly$Year <- year(sdo_monthly$Ymd)
+sdo_monthly$Month <- month(sdo_monthly$Ymd)
+sdo_monthly$Day <- day(sdo_monthly$Ymd)
+sdo_monthly$Ymd <- as.Date(sdo_monthly$Ymd)
+sdo_monthly <- select(sdo_monthly,Ymd,Year,Month,Day,Wn,Ws,Wolf)
+```
+
+## Including SDO NOrth vs South Wolf(R) Plot
+
+```{r sdo_plot, echo=FALSE}
+ggplot(data=sdo_monthly,aes(x=Ymd,y=Wn,col="North")) + geom_col() +
+  geom_col(data=sdo_monthly,aes(x=Ymd,y=Ws,col="South")) + ggtitle("SDO N/S Wolf: 2012 - 2019")
+
+sdo_current <- sdo_monthly %>% filter(Year >= 2014)
+ggplot(data=sdo_current,aes(x=Ymd,y=Wn,col="North")) + geom_col() +
+  geom_col(data=sdo_current,aes(x=Ymd,y=Ws,col="South")) + ggtitle("SDO Current N/S Wolf: 2014 - 2019")
+
+``` 
+```{r spread, echo=FALSE}
+### North table for Current Solar Min.
+sdo_current %>% select(Year,Month,Wn) %>% spread(Month,Wn)
+```
+
