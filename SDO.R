@@ -43,8 +43,9 @@ kanzel$Month <- month(kanzel$date)
 kanzel$Day <- day(kanzel$date)
 summary(kanzel)
 ## Import SIDC NOrth/South Data and pulled out only needed fields
-sidc <-  read_delim("SN_d_hem_V2.0.csv", 
-                    ";", escape_double = FALSE, trim_ws = TRUE)
+ sidc <-  read_delim("SN_d_hem_V2.0.csv", 
+                     ";", escape_double = FALSE, trim_ws = TRUE,col_names=FALSE)
+colnames(sidc) <- c("Year","Month","Day","FDate","R","Rn","Rs","Sd1","Sd2","Sd3","Obs","Obs1","Df","XXX")
 sidc <- select(sidc,Year,Month,Day,R,Rn,Rs)
 # Creat Date field : YYY-MM-DD
 sidc$Ymd <- as.Date(paste(sidc$Year, sidc$Month, sidc$Day, sep = "-"))
